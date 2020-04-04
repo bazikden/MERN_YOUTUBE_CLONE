@@ -1,0 +1,11 @@
+@import "./components/Subscribe/Subscribe.css";
+.alert_info{
+    max-height: 0;
+    overflow: hidden;
+    width: 100%;
+    transition: 2s;
+}
+
+.alert_info.opened{
+    max-height: 200px;
+}

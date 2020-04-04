@@ -1,0 +1,20 @@
+.button{
+    display:block;
+    margin: 0 5px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-weight: 600;
+    outline: none;
+
+
+}
+.subscribed{
+    background: #AAAAAA;
+    color: black;
+
+}
+.notSubscribed{
+    background: #CC0000;
+    color: #fff;
+    border: none;
+}
