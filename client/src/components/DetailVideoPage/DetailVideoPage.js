@@ -29,7 +29,7 @@ export const DetailVideoPage = () => {
                 }
             })
             .catch(err => dispatchVideos({type: SET_VIDEO_ERRORS, payload: err.response.data.msg}))
-    }, [])
+    }, [videoId])
 
     useEffect(() => {
         if (!videos.videos) {
@@ -49,7 +49,7 @@ export const DetailVideoPage = () => {
         <Row>
             <Col className='col-lg-9 col-12'>
                 <div className='videoPage'>
-                    <video className='w-100' src={video && `http://localhost:5000/${video.filePath}`} controls></video>
+                    <video style={{width:'98%'}} src={video && `http://localhost:5000/${video.filePath}`} controls autoPlay ></video>
                     {videos.error && (<Alert className='mx-3' color='danger'>{videos.error}</Alert>)}
                     <div className='details'>
                         <div className='d-flex justify-content-between'>

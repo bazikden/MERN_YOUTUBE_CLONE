@@ -46,8 +46,9 @@ export const VideoCard = ({video}) =>{
 
     return(
         <Col lg={3} md={4} xs={24}>
-            <NavLink to={`video/${video._id}`}>
+
             <Card style={styles.card}>
+                <NavLink to={`video/${video._id}`}>
                 <div style={styles.video}  className='video'>
                     <img style={styles.videoImg} src={video.thumbnail.replace(/'public,uploads'/gi,'')} alt=""/>
                     <div style={styles.duration} className='duration'>
@@ -56,6 +57,7 @@ export const VideoCard = ({video}) =>{
                         <span>{seconds}</span>
                     </div>
                 </div>
+                </NavLink>
                 <div style={styles.description} className="description">
                     <div style={styles.avatarImg} className="avatar">
                         <img style={styles.avatar} src={avatar} alt=""/>
@@ -71,8 +73,7 @@ export const VideoCard = ({video}) =>{
                     </div>
                 </div>
             </Card>
-            </NavLink>
-        </Col>
+         </Col>
 
     )
 }

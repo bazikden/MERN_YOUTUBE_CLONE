@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const Subscribers = require('../models/Subscribers')
+const Video = require('../models/Video')
 
 router.post('/subscribers', (req, res) => {
 
@@ -39,6 +40,33 @@ router.post('/unsubscribe',(req,res)=>{
     Subscribers.findOneAndDelete({userTo,userFrom})
         .then(result => res.json({success:true}))
         .catch(err => res.status(500).json({msg:'Server error'}))
+})
+
+router.post('/getSubscribedVideo',(req,res)=>{
+    const {userFrom} = req.body
+
+
+
+    // Find Subscribed Users
+    Subscribers.find({userFrom})
+        .exec((err,subscribes)=>{
+            if(err) res.status(500).json({msg:'Server error'})
+
+            const subscribedUsers = []
+
+            subscribes.map(elem =>{
+                subscribedUsers.push(elem.userTo)
+            })
+
+            // Find subscribed users video
+            Video.find({writer:{$in:subscribedUsers}})
+                .then(video => {
+                    res.json({success:true,video})
+                })
+                .catch(err => res.status(500).json({msg:'Server error'}))
+        })
+
+
 })
 
 module.exports = router

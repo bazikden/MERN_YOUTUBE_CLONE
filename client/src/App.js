@@ -8,6 +8,7 @@ import VideoUploadPage from "./components/VideoUploadPage/VideoUploadPage";
 import DetailVideoPage from "./components/DetailVideoPage/DetailVideoPage";
 import {useCookies} from "react-cookie";
 import {GlobalContext} from "./context/GlobalContext";
+import {Subscription} from "./components/Subscriptions/Subscriptions";
 
 export default function App() {
     const [cookies,setCookies] = useCookies(['x-auth'])
@@ -15,6 +16,7 @@ export default function App() {
     useEffect(()=>{
         if(cookies) Auth()
     },[cookies])
+
     return (
         <>
             <AppNavBar/>
@@ -23,6 +25,7 @@ export default function App() {
             <Route path='/login' render={() => <Login/>}/>
             <Route path='/upload' render={() => <VideoUploadPage/>}/>
             <Route path='/video/:videoId' render={() => <DetailVideoPage/>}/>
+            <Route path='/subscription' render={() => <Subscription/>}/>
         </>
     )
 }
