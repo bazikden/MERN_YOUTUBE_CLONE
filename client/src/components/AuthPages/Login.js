@@ -25,6 +25,7 @@ const Login = () => {
             if(err) console.log(err)
             success && history.push('/')
         }))
+
     }
     return (
         <div className="container mt-5">

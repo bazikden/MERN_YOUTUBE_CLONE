@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import {GlobalContext} from "../../context/GlobalContext";
 import axios from "axios";
 import {Row} from "reactstrap";
-import {VideoCard} from "../Card/Card";
+import {VideoCard} from "../DetailVideoPage/Sections/Card/Card";
 
 export const Subscription = () =>{
     const {getVideos,videos,auth} = useContext(GlobalContext)

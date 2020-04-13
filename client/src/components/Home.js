@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from "react";
-import {VideoCard} from "./Card/Card";
+import {VideoCard} from "./DetailVideoPage/Sections/Card/Card";
 import axios from "axios";
 import {GlobalContext} from "../context/GlobalContext";
 import {Row} from "reactstrap";

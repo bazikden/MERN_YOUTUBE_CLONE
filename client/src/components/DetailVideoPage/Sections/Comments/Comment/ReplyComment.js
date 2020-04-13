@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react";
-import {GlobalContext} from "../../../../context/GlobalContext";
+import {GlobalContext} from "../../../../../context/GlobalContext";
 import {SingleComment} from "./SingleComment";
 import {Button, Form, FormGroup, Input} from "reactstrap";
 import axios from "axios";

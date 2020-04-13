@@ -1,5 +1,5 @@
 import React from "react";
-import {avatar} from "../../images/images";
+import {avatar} from "../../../../images/images";
 import {Card, Col} from "reactstrap";
 import moment from "moment"
 import {NavLink} from "react-router-dom";

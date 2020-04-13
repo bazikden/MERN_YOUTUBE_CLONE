@@ -26,6 +26,8 @@ app.use('/public',express.static(path.join(__dirname,'public')))
 app.use('/api/users',require('./routes/users'))
 app.use('/api/video',require('./routes/video'))
 app.use('/api/subscribe',require('./routes/subscribe'))
+app.use('/api/comments',require('./routes/comments'))
+app.use('/api/likes',require('./routes/likes'))
 
 
 app.listen(PORT,()=>console.log(`Server is started on port ${PORT}`))

@@ -21,7 +21,7 @@ export const SmallCard = ({video}) => {
     const minutes = Math.floor(video.duration / 60)
     const seconds = Math.floor(video.duration - minutes * 60)
     return (
-        <div className='d-flex'>
+        <div style={{width:'98%'}} className='d-flex'>
 
                 <div style={{width: '30%', position: 'relative', margin: '5px'}}>
                     <NavLink className='w-100' to={`/video/${video._id}`}>

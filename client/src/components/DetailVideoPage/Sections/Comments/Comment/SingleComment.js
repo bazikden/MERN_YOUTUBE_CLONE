@@ -1,9 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {Button, Form, FormGroup, Input} from "reactstrap";
-import {avatar} from "../../../../images/images";
+import {avatar} from "../../../../../images/images";
 import {ReplyComment} from "./ReplyComment";
-import {GlobalContext} from "../../../../context/GlobalContext";
+import {GlobalContext} from "../../../../../context/GlobalContext";
 import axios from "axios";
+import {LikeDisLikes} from "../../LikeDislikes/LikeDisLikes";
 
 export const SingleComment = ({comment, postId, addComment}) => {
     const {comments,auth} = useContext(GlobalContext)
@@ -12,7 +13,6 @@ export const SingleComment = ({comment, postId, addComment}) => {
     useEffect(() => {
         const count = comments.comments.filter(f => f.responseTo === comment._id).length
         setCountReplies(count)
-        console.log(count)
     }, [comments.comments])
 
     const toggleReplies = (e) => {
@@ -26,10 +26,10 @@ export const SingleComment = ({comment, postId, addComment}) => {
     }
 
     const toggleReply = e =>{
-        if (e.currentTarget.nextElementSibling.classList.contains('active')) {
-            e.currentTarget.nextElementSibling.classList.remove('active')
+        if (e.currentTarget.parentNode.nextElementSibling.classList.contains('active')) {
+            e.currentTarget.parentNode.nextElementSibling.classList.remove('active')
         } else {
-            e.currentTarget.nextElementSibling.classList.add('active')
+            e.currentTarget.parentNode.nextElementSibling.classList.add('active')
         }
     }
 
@@ -67,10 +67,21 @@ export const SingleComment = ({comment, postId, addComment}) => {
                 <div className='w-100'>
                     <span style={{fontWeight: 600}}>{comment.writer.name}</span><br/>
                     <span style={{fontSize: '0.8rem'}}>{comment.content}</span>
+                    <div className='d-flex align-items-center'>
+                        {
+                            auth.loginedUser && auth.loginedUser.id  && (
+                                <LikeDisLikes 
+                                commentId={comment._id}
+                                userId={auth.loginedUser.id}
+                            />
+                            )
+                        }
 
-                    <div onClick={toggleReply} style={{fontSize: '0.8rem', color: 'blue', cursor: 'pointer'}}>
-                        Reply To
+                        <div onClick={toggleReply} style={{fontSize: '0.8rem', color: 'blue', cursor: 'pointer'}}>
+                            Reply To
+                        </div>
                     </div>
+
 
                     <div className='comment-answer'>
                         <Form onSubmit={onSubmit} className=' d-flex  flex-row mb-3'>

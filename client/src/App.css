@@ -1,11 +1,33 @@
-@import "./components/Subscribe/Subscribe.css";
-.alert_info{
+@import "components/DetailVideoPage/Sections/Subscribe/Subscribe.css";
+
+.alert_info {
     max-height: 0;
     overflow: hidden;
     width: 100%;
     transition: 2s;
 }
 
-.alert_info.opened{
+.alert_info.opened {
     max-height: 200px;
+}
+
+.add-comment {
+    background: #CC0000;
+}
+
+.add-comment:hover {
+    background: #ced4da;
+}
+
+.comment-answer {
+    width: 100%;
+    display: block;
+    transition: max-height .5s ease-in-out;
+    overflow: hidden;
+    max-height: 0;
+}
+
+.comment-answer.active {
+    max-height: 1000px;
+    /*transition: 1s ease-in;*/
 }
