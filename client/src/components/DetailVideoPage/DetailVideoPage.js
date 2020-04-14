@@ -4,7 +4,7 @@ import {useParams} from "react-router";
 import axios from 'axios'
 import {GlobalContext} from "../../context/GlobalContext";
 import {Alert, Col, Row} from "reactstrap";
-import {CLEAR_VIDEO_ERRORS, GET_DISLIKES, GET_LIKES, SET_VIDEO_ERRORS} from "../../context/reducers/types";
+import {CLEAR_VIDEO_ERRORS, GET_DISLIKES, GET_LIKES, SET_VIDEO_ERRORS, UPDATE_VIEWS} from "../../context/reducers/types";
 import {SmallCard} from "./Sections/SmallCard/SmallCard";
 import {Subscribe} from "./Sections/Subscribe/Subscribe";
 import {Comments} from "./Sections/Comments/Comments";
@@ -19,42 +19,27 @@ export const DetailVideoPage = () => {
 
     const [subscribers, setSubscribers] = useState(0)
 
-    // useEffect(()=>{
-    //     const data = {
-    //         videoId
-    //     }
-    //     console.log('video load')
-    //     axios.post('/api/likes/getLikes',data)
-    //         .then(res => {
-    //             if(res.data.success){
-    //                 dispatchLikes({type:GET_LIKES,payload:res.data.likes})
-
-    //             }
-    //         })
-    //         .catch(err => console.log(err))
-
-    //     axios.post('/api/likes/getDislikes')
-    //         .then(res => {
-    //             if(res.data.success){
-    //                 dispatchLikes({type:GET_DISLIKES,payload:res.data.disLikes})
-    //             }
-    //         })
-    //         .catch(err => console.log(err))
-    // },[])
 
 
     useEffect(() => {
         axios.post('/api/video/getVideo', {videoId})
             .then(res => {
                 if (res.data.success) {
+                    console.log('video upload')
                     getActiveVideo(res.data.video)
                     setVideo(res.data.video)
                     dispatchVideos({type: CLEAR_VIDEO_ERRORS})
+                    console.log(videoId)
+                    console.log(res.data.video)
+                    axios.post('/api/video/setViews',{videoId,view:res.data.video.view})
+                        .then(updated =>{
+                            updated.data.success && dispatchVideos({type:UPDATE_VIEWS,payload:videoId})
+                        })
                 } else {
                     dispatchVideos({type: SET_VIDEO_ERRORS, payload: res.data.msg})
                 }
             })
-            .catch(err => dispatchVideos({type: SET_VIDEO_ERRORS, payload: err.response.data.msg}))
+            .catch(err => dispatchVideos({type: SET_VIDEO_ERRORS, payload: err.response}))
     }, [videoId])
 
     useEffect(() => {

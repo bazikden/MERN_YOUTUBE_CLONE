@@ -18,4 +18,4 @@ const DisLikeSchema = new Schema({
 
 })
 
-module.exports = mongoose.model('DisLike', DisLikeSchema)
+module.exports = mongoose.model('DisLikes', DisLikeSchema)

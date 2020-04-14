@@ -1,4 +1,4 @@
-import {CLEAR_VIDEO_ERRORS, GET_ACTIVE_VIDEO, GET_VIDEOS, SET_VIDEO_ERRORS} from "./types";
+import {CLEAR_VIDEO_ERRORS, GET_ACTIVE_VIDEO, GET_VIDEOS, SET_VIDEO_ERRORS,UPDATE_VIEWS} from "./types";
 
 export const VideoState = {
     videos:null,
@@ -31,6 +31,15 @@ export const VideoReducer = (state=VideoState,action)=>{
                 ...state,
                 error:null
             }
+
+        case UPDATE_VIEWS:
+            return {
+                ...state,
+                videos:state.videos.map(elem=>{
+                    if(elem._id === action.payload)  elem.view +=1
+                    return elem
+                })
+            }    
 
         default: return state
     }

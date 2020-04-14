@@ -39,7 +39,7 @@ export const SmallCard = ({video}) => {
             <div>
                 <span style={{fontWeight: 700, fontSize: '1rem', color: 'black'}}>{video.title}</span><br/>
                 <span>{video.writer.name}</span><br/>
-                <span>Views{video.view}</span><br/>
+                <span>Views  {video.view} </span><br/>
 
             </div>
         </div>

@@ -49,6 +49,19 @@ router.post('/getVideo',(req,res)=>{
         .catch(err => res.status(500).json({msg:'Server error'}))
 })
 
+// Set Video views
+router.post('/setViews',(req,res)=>{
+    Video.findByIdAndUpdate(req.body.videoId,{view:req.body.view + 1},(err,doc)=>{
+        if(err) return res.status(500).json({msg:'Server error'})
+        doc.view = doc.view + 1
+        doc.save()
+            .then(result =>{
+                res.json({success:true,result})
+            })
+
+    })
+})
+
 
 // Upload Video
 router.post('/uploadFiles',auth, upload, (req, res) => {

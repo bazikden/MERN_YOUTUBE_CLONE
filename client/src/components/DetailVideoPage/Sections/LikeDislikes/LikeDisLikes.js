@@ -32,11 +32,25 @@ export const LikeDisLikes = ({videoId,userId,commentId}) => {
                         like.userId === userId && setLiked(true)
                     })
                 } else{
-                    alert('Failed to get likes')
+                    // alert('Failed to get likes')
                 }
             })
 
-    }, [videoId])
+            Axios.post('/api/likes/getDisLikes',data)
+            .then(res => {
+                if(res.data.success){
+
+                    setDisLikesCount(res.data.dislikes.length)
+
+                    res.data.dislikes.map(dislike=>{
+                        dislike.userId === userId && setDisLiked(true)
+                    })
+                } else{
+                    // alert('Failed to get likes')
+                }
+            })            
+
+    }, [])
 
     const onLikeClick = (e) =>{
         const data = {
@@ -44,16 +58,37 @@ export const LikeDisLikes = ({videoId,userId,commentId}) => {
             userId,
             commentId
         }
+
+        if(disliked){
+            setDisLiked(false)
+            setDisLikesCount(dislikesCount - 1)
+        }
+
+        !liked && setLikesCount(likesCount + 1)
+
         liked ? setLiked(false):setLiked(true)
-        disliked && setDisLiked(false)
         Axios.post('/api/likes/addLikes',data)
             .then(res => {console.log(res)})
             .catch(err => console.log(err))
     }       
 
     const onDislikeClick = (e) =>{
+        const data = {
+            videoId,
+            userId,
+            commentId
+        }
+        if(liked){
+            setLiked(false)
+            setLikesCount(likesCount - 1)
+        }
+
+        !disliked && setDisLikesCount(dislikesCount + 1)
+
         disliked ? setDisLiked(false):setDisLiked(true)
-        liked && setLiked(false)
+        Axios.post('/api/likes/addDisLikes',data)
+            .then(res => {console.log(res)})
+            .catch(err => console.log(err))
     }
     return(
         <div className='align-self-center mr-2'>
@@ -62,13 +97,13 @@ export const LikeDisLikes = ({videoId,userId,commentId}) => {
                 :
                 <Icon  style={styles}  onClick={onLikeClick}  name="thumbs up outline"/>
             }
-            {likesCount}
+            <span className='mx-1'>{likesCount}</span>
             {
                 disliked ?<Icon style={styles} onClick={onDislikeClick} name="thumbs down"/>
                 :
                 <Icon style={styles} onClick={onDislikeClick}  name="thumbs down outline"/>
             }
-
+            <span className='mx-1'>{dislikesCount}</span>    
 
 
 

@@ -12,36 +12,89 @@ router.post('/getLikes', (req, res) => {
         data = {commentId}
     }
 
+
     Likes.find(data)
         .then(likes => {
-            likes.length >0 && res.json({success: true, likes})
+            likes.length > 0 ? res.json({success: true, likes})
+            : res.json({success:false})
         })
         .catch(err => res.status(500).json({error: 'Server error'}))
 })
 
-router.post('/getDislikes', (req, res) => {
+router.post('/getDisLikes', (req, res) => {
+    let data = {}
     const {videoId,commentId,userId} = req.body
-    commentId === 'undefined' && (commentId = null)
-    DisLikes.find({videoId,userId,commentId})
-        .then(disLikes => res.json({success: true, disLikes}))
+    if(videoId){
+        data = {videoId}
+    }else {
+        data = {commentId}
+    }
+
+
+    DisLikes.find(data)
+        .then(dislikes => {
+            dislikes.length >0 ? res.json({success: true, dislikes})
+            : res.json({success:false})
+        })
         .catch(err => res.status(500).json({error: 'Server error'}))
 })
 
 router.post('/addLikes', (req, res) => {
+    let data = {}
     const {videoId,commentId,userId} = req.body
-    commentId === 'undefined' && (commentId = null)
-    const like = new Likes({videoId,userId,commentId})
-    like.save()
-        .then(likes => res.json({success: true,likes}))
-        .catch(err => res.status(500).json({error: 'Server error'}))
+    if(videoId){
+        data = {videoId,userId}
+    }else {
+        data = {commentId,userId}
+    }
+
+    Likes.findOneAndDelete(data)
+        .then(like => {
+
+    DisLikes.findOneAndDelete(data)
+        .catch(err => res.json({err}))
+            if(!like){
+                const newLike = new Likes(data)
+                newLike.save()
+                    .then(likes => res.json({success: true,likes}))
+                    .catch(err => res.status(500).json({error: 'Server error'}))
+            }else{
+                res.json({success:true})
+            }
+        })
+        .catch(err => res.json({err}))
+
+
 })
 
 router.post('/addDislikes', (req, res) => {
+    let data = {}
     const {videoId,commentId,userId} = req.body
-    commentId === 'undefined' && (commentId = null)
-    DisLikes.find({videoId,userId,commentId})
-        .then(disLikes => res.json({success: true, disLikes}))
-        .catch(err => res.status(500).json({error: 'Server error'}))
+    console.log(req.body)
+    if(videoId){
+        data = {videoId,userId}
+    }else {
+        data = {commentId,userId}
+    }
+
+    DisLikes.findOneAndDelete(data)
+        .then(dislike => {
+            
+            Likes.findOneAndDelete(data)
+                .then(like =>{
+                    if(!dislike){
+                        const newDisLike = new DisLikes(data)
+                        newDisLike.save()
+                            .then(dislikes => res.json({success: true,dislikes}))
+                            .catch(err => res.status(500).json({error: 'Server error'}))
+                    }else{
+                        res.json({success:true})
+                    }
+                })
+                .catch(err => res.json({err}))
+
+        })
+        .catch(err => res.json({err}))
 })
 
 module.exports = router

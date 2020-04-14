@@ -23,12 +23,12 @@ const AppNavBar = () => {
     <div>
       <Navbar color="light" light expand="md">
         <img  style={{width:'25px',height:'25px',cursor:'pointer'}} src={tubeIcon} alt=""/>
-        <NavbarBrand href="/">My tube</NavbarBrand>
+        <NavbarBrand>My tube</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <NavItem>
-              <NavLink className='mx-1' to='/video'>Video</NavLink>
+              <NavLink className='mx-1' to='/'>Video</NavLink>
             </NavItem>
             <NavItem>
               <NavLink className='mx-1' to='/subscription'>Subscription</NavLink>
