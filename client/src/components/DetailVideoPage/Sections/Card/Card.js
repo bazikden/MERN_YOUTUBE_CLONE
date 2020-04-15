@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {avatar} from "../../../../images/images";
 import {Card, Col} from "reactstrap";
 import moment from "moment"
@@ -19,7 +19,9 @@ const styles ={
       position: 'relative'
     },
     videoImg:{
-      width: '100%'
+      width: '100%',
+      //transform: 'scale(2)',
+      transition: '.3s ease-in'
     },
     duration:{
         position:'absolute',
@@ -43,14 +45,34 @@ const styles ={
 export const VideoCard = ({video}) =>{
     const minutes = Math.floor(video.duration/60)
     const seconds = Math.floor(video.duration - minutes * 60)
+    console.log(video.thumbnailsArr[3]);
 
+
+
+
+ let start
+
+    const onVideoEnter = e => {
+        e.persist()
+        let number = 0
+        start =  setInterval(()=>{
+            number === video.thumbnailsArr.length - 1 ? number = 0:number +=1
+            e.target.src = 'public/uploads/thumbnails/' +video.thumbnailsArr[number]
+        },1500)
+    }
+
+    const onVideoLeave = () => {
+        console.log('leave')
+        clearInterval(start)
+    }
+    
     return(
         <Col lg={3} md={4} xs={24}>
 
             <Card style={styles.card}>
                 <NavLink to={`video/${video._id}`}>
                 <div style={styles.video}  className='video'>
-                    <img style={styles.videoImg} src={video.thumbnail.replace(/'public,uploads'/gi,'')} alt=""/>
+                    <img  onMouseLeave={onVideoLeave} onMouseOver={onVideoEnter} style={styles.videoImg} src={video.thumbnail} alt=""/>
                     <div style={styles.duration} className='duration'>
                         <span>{minutes}</span>
                         :
