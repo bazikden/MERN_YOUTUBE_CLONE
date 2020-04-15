@@ -45,12 +45,8 @@ const styles ={
 export const VideoCard = ({video}) =>{
     const minutes = Math.floor(video.duration/60)
     const seconds = Math.floor(video.duration - minutes * 60)
-    console.log(video.thumbnailsArr[3]);
 
-
-
-
- let start
+     let start
 
     const onVideoEnter = e => {
         e.persist()
@@ -62,7 +58,6 @@ export const VideoCard = ({video}) =>{
     }
 
     const onVideoLeave = () => {
-        console.log('leave')
         clearInterval(start)
     }
     
